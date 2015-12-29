@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterController : MonoBehaviour
+public class CharacterScript : MonoBehaviour
 {
 
 	public float inputDelay = 0.1f;
-	public float forwardVel = 12;
-	public float rotateVel = 100;
+	public float forwardVel = 12.0f;
+	public float rotateVel = 100.0f;
+	public float jumpPower = 100.0f;
 	Quaternion targetRotation;
 	Rigidbody rBody;
-	float forwardInput, turnInput;
+	private float forwardInput, turnInput;
 
 	void Start()
 	{
@@ -33,11 +34,18 @@ public class CharacterController : MonoBehaviour
 	{
 		GetInput();
 		Turn();
+		if (Input.GetButtonDown("Jump"))
+			Jump();
 	}
 
 	void FixedUpdate()
 	{
 		Run();
+	}
+
+	void Jump()
+	{
+		rBody.AddForce(transform.up * jumpPower);
 	}
 
 	void Run()
